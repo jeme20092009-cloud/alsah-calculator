@@ -1,193 +1,688 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>الصح | حاسبة السعرات</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta name="description" content="حاسبة السعرات والماكروز من قناة الصح">
+  <title>حاسبة السعرات والماكروز | الصح</title>
 
   <style>
+    :root {
+      --bg: #0b0b0b;
+      --panel: #151515;
+      --panel-light: #1c1c1c;
+      --red: #e32636;
+      --red-light: #ff4b57;
+      --text: #f6f6f6;
+      --muted: #aaa;
+      --border: #303030;
+    }
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      padding: 24px;
-      background: #f3f7f4;
-      color: #1d2922;
-      font-family: Arial, Tahoma, sans-serif;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at top, rgba(227, 38, 54, 0.14), transparent 42%),
+        var(--bg);
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.7;
     }
 
-    .card {
-      max-width: 520px;
-      margin: 30px auto;
-      padding: 28px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 8px 30px #19332112;
+    .container {
+      width: min(100% - 32px, 1020px);
+      margin: 0 auto;
+      padding: 36px 0 50px;
+    }
+
+    .header {
+      padding-top: 48px;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    /* مساحة مستطيلة مرنة للشعار حتى يظهر كاملًا بدون قص */
+    .logo-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: min(320px, 82vw);
+      height: 155px;
+      margin: 0 auto 12px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 16px;
+      background: transparent;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .logo-box img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 4px;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .logo-box::after {
+      content: "";
+      position: absolute;
+      top: -35%;
+      left: -75%;
+      width: 30%;
+      height: 170%;
+      transform: rotate(25deg);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.52),
+        transparent
+      );
+      animation: shine 3.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes shine {
+      0%, 25% { left: -75%; }
+      65%, 100% { left: 135%; }
     }
 
     h1 {
-      margin: 0 0 8px;
-      color: #167344;
+      margin: 0;
+      color: var(--red-light);
+      font-size: clamp(1.7rem, 5vw, 2.5rem);
     }
 
-    .intro {
-      margin: 0 0 22px;
-      color: #59645d;
-      line-height: 1.7;
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
     }
 
-    label {
+    .panel {
+      padding: clamp(18px, 4vw, 32px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(21, 21, 21, 0.96);
+      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
+    }
+
+    .panel h2,
+    .social-section h2 {
+      margin: 0 0 18px;
+      font-size: 1.35rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .field label {
       display: block;
-      margin: 15px 0 6px;
-      font-weight: bold;
+      margin-bottom: 7px;
+      color: #e8e8e8;
+      font-size: 0.95rem;
     }
 
-    input, select, button {
+    .field input,
+    .field select {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #ccd6ce;
+      min-height: 48px;
+      padding: 10px 12px;
+      outline: none;
+      border: 1px solid #3a3a3a;
       border-radius: 10px;
-      font-size: 16px;
+      color: var(--text);
+      background: #0e0e0e;
+      font: inherit;
     }
 
-    input:focus, select:focus {
-      outline: 2px solid #7ac49a;
-      border-color: #167344;
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(227, 38, 54, 0.16);
     }
 
-    button {
+    .field select option {
+      background: #151515;
+    }
+
+    .submit-button {
+      width: 100%;
+      min-height: 50px;
       margin-top: 22px;
       border: 0;
-      background: #167344;
-      color: white;
+      border-radius: 11px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--red), #a80f1e);
+      font: inherit;
       font-weight: bold;
       cursor: pointer;
+      transition: transform 0.2s, filter 0.2s;
     }
 
-    button:hover {
-      background: #105b34;
+    .submit-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
     }
 
-    #result {
-      display: none;
-      margin-top: 22px;
-      padding: 18px;
-      background: #edf8f0;
-      border-radius: 12px;
-      line-height: 1.9;
+    .results {
+      margin-top: 28px;
     }
 
-    .notice {
-      margin-top: 18px;
-      color: #68736b;
-      font-size: 13px;
-      line-height: 1.7;
+    .results h2 {
+      margin-bottom: 14px;
     }
 
-    .number {
-      color: #12663b;
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .result-card {
+      min-height: 116px;
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel-light);
+    }
+
+    .result-card.highlight {
+      border-color: rgba(227, 38, 54, 0.8);
+      box-shadow: inset 0 0 22px rgba(227, 38, 54, 0.08);
+    }
+
+    .result-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .result-value {
+      color: #fff;
+      font-size: 1.35rem;
       font-weight: bold;
+    }
+
+    .result-unit {
+      margin-right: 4px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: normal;
+    }
+
+    .macro-card .result-value {
+      color: var(--red-light);
+    }
+
+    .ratio {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .social-section {
+      margin-top: 38px;
+      text-align: center;
+    }
+
+    .social-section h2 {
+      margin-bottom: 5px;
+      color: var(--red-light);
+    }
+
+    .social-intro {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .social-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 19px 14px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      color: var(--text);
+      background: var(--panel);
+      text-decoration: none;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .social-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--red);
+    }
+
+    .social-card strong {
+      color: var(--red-light);
+      font-size: 1.05rem;
+    }
+
+    .social-qr {
+      display: block;
+      width: 170px;
+      height: 170px;
+      padding: 7px;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .social-hint {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .footer {
+      margin-top: 26px;
+      color: #777;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    /* عداد الزيارات أعلى يمين الصفحة */
+    .visitor-badge {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 13px;
+      border: 1px solid var(--red);
+      border-radius: 12px;
+      color: #fff;
+      background: #171717;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+      font-size: 0.9rem;
+    }
+
+    #visitor-number {
+      color: var(--red-light);
+      font-weight: bold;
+    }
+
+    #visitor-number div {
+      display: inline;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      color: var(--red-light);
+      background: transparent;
+      font: inherit;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 700px) {
+      .results-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .social-card {
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: min(100% - 22px, 1020px);
+        padding-top: 24px;
+      }
+
+      .header {
+        padding-top: 48px;
+      }
+
+      .logo-box {
+        width: min(280px, 82vw);
+        height: 135px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+
+      .result-card {
+        min-height: 105px;
+        padding: 13px;
+      }
+
+      .result-value {
+        font-size: 1.15rem;
+      }
+
+      .visitor-badge {
+        top: 8px;
+        right: 8px;
+        padding: 6px 9px;
+        font-size: 0.78rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 
 <body>
-  <main class="card">
-    <h1>الصح</h1>
-    <p class="intro">احسب احتياجك اليومي التقريبي من السعرات الحرارية.</p>
+  <div class="visitor-badge" dir="rtl">
+    <span>عدد الزيارات:</span>
+    <div id="visitor-number">جارٍ التحميل...</div>
+  </div>
 
-    <form id="calorieForm">
-      <label for="sex">المعادلة المستخدمة</label>
-      <select id="sex" required>
-        <option value="male">رجل</option>
-        <option value="female">امرأة</option>
-      </select>
+  <main class="container">
+    <header class="header">
+      <div class="logo-box">
+        <img src="logo.png" alt="شعار قناة الصح">
+      </div>
 
-      <label for="age">العمر (سنة)</label>
-      <input id="age" type="number" min="18" max="100" placeholder="مثال: 28" required />
+      <h1>حاسبة السعرات والماكروز</h1>
+      <p class="subtitle">احسب احتياجك اليومي بطريقة سهلة من قناة الصح</p>
+    </header>
 
-      <label for="weight">الوزن (كجم)</label>
-      <input id="weight" type="number" min="30" max="300" step="0.1" placeholder="مثال: 75" required />
+    <section class="panel" aria-labelledby="calculator-title">
+      <h2 id="calculator-title">بياناتك</h2>
 
-      <label for="height">الطول (سم)</label>
-      <input id="height" type="number" min="120" max="230" placeholder="مثال: 175" required />
+      <form id="calculator">
+        <div class="form-grid">
+          <div class="field">
+            <label for="gender">الجنس</label>
+            <select id="gender" required>
+              <option value="male">ذكر</option>
+              <option value="female">أنثى</option>
+            </select>
+          </div>
 
-      <label for="activity">مستوى النشاط اليومي</label>
-      <select id="activity" required>
-        <option value="1.2">قليل الحركة — تمرين نادر أو بدون تمرين</option>
-        <option value="1.375">نشاط خفيف — تمرين 1–3 أيام بالأسبوع</option>
-        <option value="1.55">نشاط متوسط — تمرين 3–5 أيام بالأسبوع</option>
-        <option value="1.725">نشاط عالٍ — تمرين قوي 6–7 أيام بالأسبوع</option>
-        <option value="1.9">نشاط عالٍ جدًا — تمرين شاق مع عمل بدني</option>
-      </select>
+          <div class="field">
+            <label for="age">العمر (سنة)</label>
+            <input id="age" type="number" min="18" max="100" placeholder="مثال: 25" required>
+          </div>
 
-      <label for="goal">الهدف</label>
-      <select id="goal">
-        <option value="maintain">المحافظة على الوزن</option>
-        <option value="lose">نزول وزن تدريجي</option>
-        <option value="gain">زيادة وزن تدريجية</option>
-      </select>
+          <div class="field">
+            <label for="weight">الوزن (كجم)</label>
+            <input id="weight" type="number" min="30" max="300" step="0.1" placeholder="مثال: 70" required>
+          </div>
 
-      <button type="submit">احسب احتياجي</button>
-    </form>
+          <div class="field">
+            <label for="height">الطول (سم)</label>
+            <input id="height" type="number" min="120" max="230" step="0.1" placeholder="مثال: 175" required>
+          </div>
 
-    <section id="result" aria-live="polite"></section>
+          <div class="field">
+            <label for="activity">مستوى النشاط</label>
+            <select id="activity" required>
+              <option value="1.2">قليل الحركة — تمارين نادرة</option>
+              <option value="1.375">نشاط خفيف — 1 إلى 3 أيام بالأسبوع</option>
+              <option value="1.55">نشاط متوسط — 3 إلى 5 أيام بالأسبوع</option>
+              <option value="1.725">نشاط عالٍ — 6 إلى 7 أيام بالأسبوع</option>
+              <option value="1.9">نشاط عالٍ جداً — مجهود بدني شديد</option>
+            </select>
+          </div>
 
-    <p class="notice">
-      النتيجة تقديرية وقد تختلف عن احتياج جسمك الفعلي. هذه الحاسبة للبالغين
-      فقط، وليست مناسبة لمن هم دون 18 سنة أو للحمل والرضاعة أو للحالات
-      الصحية التي تحتاج متابعة مختص.
-    </p>
+          <div class="field">
+            <label for="goal">هدفك</label>
+            <select id="goal" required>
+              <option value="loss">خسارة الوزن</option>
+              <option value="maintain">المحافظة على الوزن</option>
+              <option value="gain">زيادة الوزن</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="submit-button" type="submit">احسب احتياجي</button>
+      </form>
+
+      <section class="results" id="results" aria-live="polite" hidden>
+        <h2>النتائج اليومية</h2>
+
+        <div class="results-grid">
+          <div class="result-card">
+            <span class="result-label">معدل الأيض الأساسي (BMR)</span>
+            <span class="result-value" id="bmr-result">—</span>
+            <span class="result-unit">سعرة</span>
+          </div>
+
+          <div class="result-card">
+            <span class="result-label">سعرات المحافظة</span>
+            <span class="result-value" id="maintenance-result">—</span>
+            <span class="result-unit">سعرة</span>
+          </div>
+
+          <div class="result-card highlight">
+            <span class="result-label">السعرات حسب هدفك</span>
+            <span class="result-value" id="target-result">—</span>
+            <span class="result-unit">سعرة</span>
+          </div>
+
+          <div class="result-card macro-card">
+            <span class="result-label">البروتين</span>
+            <span class="result-value" id="protein-result">—</span>
+            <span class="result-unit">جرام</span>
+            <span class="ratio" id="protein-ratio"></span>
+          </div>
+
+          <div class="result-card macro-card">
+            <span class="result-label">الكربوهيدرات</span>
+            <span class="result-value" id="carbs-result">—</span>
+            <span class="result-unit">جرام</span>
+            <span class="ratio" id="carbs-ratio"></span>
+          </div>
+
+          <div class="result-card macro-card">
+            <span class="result-label">الدهون</span>
+            <span class="result-value" id="fat-result">—</span>
+            <span class="result-unit">جرام</span>
+            <span class="ratio" id="fat-ratio"></span>
+          </div>
+        </div>
+
+        <p class="note">
+          النتائج تقديرية وتعتمد على معادلة Mifflin–St Jeor. احتياجك الفعلي قد يختلف.
+        </p>
+      </section>
+    </section>
+
+    <section class="social-section" aria-labelledby="social-title">
+      <h2 id="social-title">تابع قناة الصح</h2>
+      <p class="social-intro">امسح رمز QR أو اضغط على المنصة لزيارة حسابنا</p>
+
+      <div class="social-grid">
+        <a class="social-card"
+           href="https://www.instagram.com/al9a7keif/"
+           target="_blank"
+           rel="noopener noreferrer">
+          <strong>إنستغرام</strong>
+          <img class="social-qr" alt="رمز QR لحساب إنستغرام">
+          <span class="social-hint">@al9a7keif</span>
+        </a>
+
+        <a class="social-card"
+           href="https://www.tiktok.com/@al9a7keif"
+           target="_blank"
+           rel="noopener noreferrer">
+          <strong>تيك توك</strong>
+          <img class="social-qr" alt="رمز QR لحساب تيك توك">
+          <span class="social-hint">@al9a7keif</span>
+        </a>
+
+        <a class="social-card"
+           href="https://www.facebook.com/share/1J5wu7i9UY/"
+           target="_blank"
+           rel="noopener noreferrer">
+          <strong>فيسبوك</strong>
+          <img class="social-qr" alt="رمز QR لرابط فيسبوك">
+          <span class="social-hint">زوروا حسابنا</span>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">© قناة الصح</footer>
   </main>
 
   <script>
-    const form = document.getElementById("calorieForm");
-    const result = document.getElementById("result");
+    const numberFormat = new Intl.NumberFormat("ar-EG", {
+      maximumFractionDigits: 0
+    });
 
-    form.addEventListener("submit", function (event) {
+    const macroRatios = {
+      loss: { protein: 0.30, carbs: 0.45, fat: 0.25 },
+      maintain: { protein: 0.25, carbs: 0.50, fat: 0.25 },
+      gain: { protein: 0.25, carbs: 0.55, fat: 0.20 }
+    };
+
+    document.getElementById("calculator").addEventListener("submit", function (event) {
       event.preventDefault();
 
-      const sex = document.getElementById("sex").value;
+      const gender = document.getElementById("gender").value;
       const age = Number(document.getElementById("age").value);
       const weight = Number(document.getElementById("weight").value);
       const height = Number(document.getElementById("height").value);
       const activity = Number(document.getElementById("activity").value);
       const goal = document.getElementById("goal").value;
 
-      if (!age || !weight || !height || age < 18) {
-        result.style.display = "block";
-        result.textContent = "من فضلك أدخل بيانات صحيحة. الحاسبة مخصصة للبالغين.";
-        return;
-      }
+      if (!age || !weight || !height || !activity) return;
 
-      // معادلة Mifflin–St Jeor لتقدير معدل الحرق أثناء الراحة
-      const bmr = (10 * weight) + (6.25 * height) - (5 * age)
-        + (sex === "male" ? 5 : -161);
+      // معادلة Mifflin–St Jeor
+      const bmr =
+        (10 * weight) +
+        (6.25 * height) -
+        (5 * age) +
+        (gender === "male" ? 5 : -161);
 
-      // تقدير إجمالي الاحتياج اليومي بحسب مستوى النشاط
       const maintenance = bmr * activity;
 
-      let target = maintenance;
-      let goalText = "للمحافظة على الوزن";
+      // خسارة: ناقص 500، محافظة: بدون تعديل، زيادة: زائد 500 سعرة
+      const calorieAdjustment = {
+        loss: -500,
+        maintain: 0,
+        gain: 500
+      };
 
-      if (goal === "lose") {
-        target = maintenance * 0.90;
-        goalText = "لنزول تدريجي في الوزن";
-      } else if (goal === "gain") {
-        target = maintenance * 1.10;
-        goalText = "لزيادة تدريجية في الوزن";
-      }
+      const target = Math.max(0, maintenance + calorieAdjustment[goal]);
+      const ratios = macroRatios[goal];
 
-      result.style.display = "block";
-      result.innerHTML = `
-        <div>معدل الحرق الأساسي التقريبي: <span class="number">${Math.round(bmr)}</span> سعرة/يوم</div>
-        <div>احتياج المحافظة على الوزن: <span class="number">${Math.round(maintenance)}</span> سعرة/يوم</div>
-        <div>${goalText}: <span class="number">${Math.round(target)}</span> سعرة/يوم</div>
-        <small>راقب تغيّر الوزن والطاقة مع الوقت؛ الرقم نقطة بداية تقديرية، وليس قياسًا دقيقًا.</small>
-      `;
+      // البروتين والكربوهيدرات 4 سعرات/جرام، والدهون 9 سعرات/جرام
+      const proteinGrams = (target * ratios.protein) / 4;
+      const carbsGrams = (target * ratios.carbs) / 4;
+      const fatGrams = (target * ratios.fat) / 9;
+
+      document.getElementById("bmr-result").textContent =
+        numberFormat.format(Math.round(bmr));
+
+      document.getElementById("maintenance-result").textContent =
+        numberFormat.format(Math.round(maintenance));
+
+      document.getElementById("target-result").textContent =
+        numberFormat.format(Math.round(target));
+
+      document.getElementById("protein-result").textContent =
+        numberFormat.format(Math.round(proteinGrams));
+
+      document.getElementById("carbs-result").textContent =
+        numberFormat.format(Math.round(carbsGrams));
+
+      document.getElementById("fat-result").textContent =
+        numberFormat.format(Math.round(fatGrams));
+
+      document.getElementById("protein-ratio").textContent =
+        numberFormat.format(ratios.protein * 100) + "% من السعرات";
+
+      document.getElementById("carbs-ratio").textContent =
+        numberFormat.format(ratios.carbs * 100) + "% من السعرات";
+
+      document.getElementById("fat-ratio").textContent =
+        numberFormat.format(ratios.fat * 100) + "% من السعرات";
+
+      document.getElementById("results").hidden = false;
+      document.getElementById("results").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
     });
+
+    // إنشاء رموز QR لحسابات السوشيال ميديا
+    document.querySelectorAll(".social-card").forEach(function (card) {
+      const qrImage = card.querySelector(".social-qr");
+
+      qrImage.src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+        encodeURIComponent(card.href);
+    });
+  </script>
+
+  <!-- يعرض مجموع زيارات الموقع داخل شارة العداد -->
+  <script>
+    const counterWait = setInterval(function () {
+      if (window.goatcounter && window.goatcounter.visit_count) {
+        clearInterval(counterWait);
+
+        window.goatcounter.visit_count({
+          append: "#visitor-number",
+          path: "TOTAL",
+          type: "html",
+          no_branding: true
+        });
+      }
+    }, 100);
+  </script>
+
+  <!-- يسجل الزيارات في GoatCounter -->
+  <script
+    data-goatcounter="https://al9a7keif.goatcounter.com/count"
+    async
+    src="https://gc.zgo.at/count.js">
   </script>
 </body>
 </html>
