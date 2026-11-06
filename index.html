@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b0b0b">
-  <meta name="description" content="حاسبة السعرات والماكروز من قناة الصح">
+  <meta name="theme-color" content="#111111">
+  <meta name="description" content="حاسبة السعرات الحرارية والماكروز من قناة الصح">
   <title>حاسبة السعرات والماكروز | الصح</title>
 
   <style>
     :root {
-      --bg: #0b0b0b;
-      --panel: #151515;
-      --panel-light: #1c1c1c;
-      --red: #e32636;
-      --red-light: #ff4b57;
-      --text: #f6f6f6;
-      --muted: #aaa;
-      --border: #303030;
+      --background: #101010;
+      --surface: #191919;
+      --surface-light: #222222;
+      --red: #e52525;
+      --red-dark: #b91919;
+      --text: #f5f5f5;
+      --muted: #b8b8b8;
+      --border: #333333;
+      --green: #63d68b;
     }
 
     * {
@@ -26,329 +27,377 @@
     body {
       margin: 0;
       min-height: 100vh;
-      color: var(--text);
       background:
-        radial-gradient(ellipse at top, rgba(227, 38, 54, 0.14), transparent 42%),
-        var(--bg);
-      font-family: Tahoma, Arial, sans-serif;
+        radial-gradient(ellipse at top, rgba(229, 37, 37, 0.12), transparent 42%),
+        var(--background);
+      color: var(--text);
+      font-family: Arial, Tahoma, sans-serif;
       line-height: 1.7;
     }
 
-    .container {
-      width: min(100% - 32px, 1020px);
+    .page {
+      width: min(100% - 32px, 1000px);
       margin: 0 auto;
-      padding: 36px 0 50px;
+      padding: 34px 0 48px;
     }
 
-    .header {
-      padding-top: 48px;
-      margin-bottom: 28px;
+    .visitor-counter {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      z-index: 2;
+      color: var(--red);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .site-header {
       text-align: center;
+      padding: 20px 0 28px;
     }
 
-    /* مساحة مستطيلة مرنة للشعار حتى يظهر كاملًا بدون قص */
-    .logo-box {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: min(320px, 82vw);
-      height: 155px;
-      margin: 0 auto 12px;
+    .logo-frame {
+      width: 146px;
+      height: 146px;
+      margin: 10px auto 18px;
+      padding: 5px;
       overflow: hidden;
-      border: 0;
-      border-radius: 16px;
-      background: transparent;
-      animation: float 3s ease-in-out infinite;
+      position: relative;
+      border: 3px solid var(--red);
+      border-radius: 50%;
+      background: #080808;
+      box-shadow: 0 0 22px rgba(229, 37, 37, 0.34);
+      animation: float 3.6s ease-in-out infinite;
     }
 
-    .logo-box img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      padding: 4px;
-      object-fit: contain;
-      object-position: center;
-    }
-
-    .logo-box::after {
+    .logo-frame::after {
       content: "";
       position: absolute;
-      top: -35%;
-      left: -75%;
-      width: 30%;
-      height: 170%;
+      top: -55%;
+      left: -80%;
+      width: 45%;
+      height: 210%;
       transform: rotate(25deg);
       background: linear-gradient(
         90deg,
         transparent,
-        rgba(255, 255, 255, 0.52),
+        rgba(255, 255, 255, 0.42),
         transparent
       );
-      animation: shine 3.5s ease-in-out infinite;
+      animation: shine 4.5s ease-in-out infinite;
       pointer-events: none;
+    }
+
+    .logo-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      50% { transform: translateY(-9px); }
     }
 
     @keyframes shine {
-      0%, 25% { left: -75%; }
-      65%, 100% { left: 135%; }
+      0%, 40% { left: -80%; }
+      75%, 100% { left: 145%; }
     }
 
     h1 {
       margin: 0;
-      color: var(--red-light);
-      font-size: clamp(1.7rem, 5vw, 2.5rem);
+      color: var(--text);
+      font-size: clamp(26px, 5vw, 38px);
+      line-height: 1.3;
     }
 
     .subtitle {
-      margin: 6px 0 0;
+      margin: 8px 0 0;
       color: var(--muted);
+      font-size: 15px;
     }
 
-    .panel {
-      padding: clamp(18px, 4vw, 32px);
+    .accent {
+      color: var(--red);
+    }
+
+    .calculator,
+    .social-section {
       border: 1px solid var(--border);
-      border-radius: 20px;
-      background: rgba(21, 21, 21, 0.96);
-      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
+      border-radius: 18px;
+      background: rgba(25, 25, 25, 0.96);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
     }
 
-    .panel h2,
-    .social-section h2 {
-      margin: 0 0 18px;
-      font-size: 1.35rem;
+    .calculator {
+      padding: clamp(18px, 4vw, 32px);
+    }
+
+    .section-title {
+      margin: 0 0 20px;
+      font-size: 21px;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 17px;
+      gap: 16px;
+    }
+
+    .field {
+      min-width: 0;
     }
 
     .field label {
       display: block;
       margin-bottom: 7px;
-      color: #e8e8e8;
-      font-size: 0.95rem;
+      color: #e4e4e4;
+      font-size: 14px;
+      font-weight: 700;
     }
 
-    .field input,
-    .field select {
+    input,
+    select {
       width: 100%;
       min-height: 48px;
-      padding: 10px 12px;
-      outline: none;
-      border: 1px solid #3a3a3a;
+      padding: 10px 13px;
+      border: 1px solid #414141;
       border-radius: 10px;
+      outline: none;
+      background: #111111;
       color: var(--text);
-      background: #0e0e0e;
       font: inherit;
+      font-size: 15px;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    .field input:focus,
-    .field select:focus {
+    input:focus,
+    select:focus {
       border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(227, 38, 54, 0.16);
+      box-shadow: 0 0 0 3px rgba(229, 37, 37, 0.16);
     }
 
-    .field select option {
-      background: #151515;
+    input::placeholder {
+      color: #858585;
     }
 
-    .submit-button {
+    .calculate-button {
       width: 100%;
-      min-height: 50px;
+      min-height: 52px;
       margin-top: 22px;
       border: 0;
       border-radius: 11px;
-      color: #fff;
-      background: linear-gradient(135deg, var(--red), #a80f1e);
+      background: var(--red);
+      color: white;
       font: inherit;
-      font-weight: bold;
+      font-size: 17px;
+      font-weight: 700;
       cursor: pointer;
-      transition: transform 0.2s, filter 0.2s;
+      transition: background 0.2s, transform 0.2s;
     }
 
-    .submit-button:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.12);
+    .calculate-button:hover {
+      background: var(--red-dark);
+      transform: translateY(-1px);
+    }
+
+    .error-message {
+      min-height: 24px;
+      margin: 9px 0 0;
+      color: #ff7777;
+      font-size: 14px;
     }
 
     .results {
+      display: none;
       margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
     }
 
-    .results h2 {
-      margin-bottom: 14px;
+    .results.visible {
+      display: block;
     }
 
-    .results-grid {
+    .result-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 13px;
+      gap: 12px;
     }
 
     .result-card {
-      min-height: 116px;
-      padding: 17px;
+      padding: 16px 12px;
       border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--panel-light);
+      border-radius: 12px;
+      background: var(--surface-light);
+      text-align: center;
     }
 
     .result-card.highlight {
-      border-color: rgba(227, 38, 54, 0.8);
-      box-shadow: inset 0 0 22px rgba(227, 38, 54, 0.08);
+      border-color: rgba(229, 37, 37, 0.7);
+      background: rgba(229, 37, 37, 0.1);
     }
 
     .result-label {
       display: block;
-      margin-bottom: 8px;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 13px;
     }
 
     .result-value {
-      color: #fff;
-      font-size: 1.35rem;
-      font-weight: bold;
+      display: block;
+      margin-top: 5px;
+      color: var(--text);
+      font-size: clamp(20px, 4vw, 26px);
+      font-weight: 800;
+      line-height: 1.3;
     }
 
     .result-unit {
-      margin-right: 4px;
       color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: normal;
+      font-size: 12px;
     }
 
-    .macro-card .result-value {
-      color: var(--red-light);
+    .macro-title {
+      margin: 24px 0 12px;
+      font-size: 18px;
     }
 
-    .ratio {
-      display: block;
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 0.82rem;
+    .macro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
     }
 
-    .note {
-      margin: 18px 0 0;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .social-section {
-      margin-top: 38px;
+    .macro-card {
+      padding: 15px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #141414;
       text-align: center;
     }
 
-    .social-section h2 {
-      margin-bottom: 5px;
-      color: var(--red-light);
+    .macro-name {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
     }
 
-    .social-intro {
-      margin: 0 0 18px;
+    .macro-grams {
+      display: block;
+      margin-top: 3px;
+      color: var(--green);
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .macro-percent {
+      color: #a7a7a7;
+      font-size: 12px;
+    }
+
+    .calculation-note {
+      margin: 16px 0 0;
       color: var(--muted);
+      font-size: 12px;
+    }
+
+    .social-section {
+      margin-top: 24px;
+      padding: clamp(18px, 4vw, 28px);
+    }
+
+    .social-section .section-title {
+      text-align: center;
     }
 
     .social-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      gap: 14px;
     }
 
     .social-card {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      padding: 19px 14px;
+      gap: 9px;
+      padding: 17px 12px;
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 13px;
+      background: #141414;
       color: var(--text);
-      background: var(--panel);
+      text-align: center;
       text-decoration: none;
-      transition: transform 0.2s, border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s;
     }
 
     .social-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-3px);
       border-color: var(--red);
     }
 
-    .social-card strong {
-      color: var(--red-light);
-      font-size: 1.05rem;
+    .qr-code {
+      width: 112px;
+      height: 112px;
+      padding: 5px;
+      border-radius: 8px;
+      background: white;
     }
 
-    .social-qr {
-      display: block;
-      width: 170px;
-      height: 170px;
-      padding: 7px;
-      border-radius: 10px;
-      background: #fff;
+    .social-name {
+      color: var(--text);
+      font-weight: 700;
     }
 
-    .social-hint {
+    .social-handle {
       color: var(--muted);
-      font-size: 0.88rem;
+      direction: ltr;
+      font-size: 13px;
     }
 
-    .footer {
-      margin-top: 26px;
-      color: #777;
+    .page-footer {
+      padding-top: 20px;
+      color: #858585;
+      font-size: 12px;
       text-align: center;
-      font-size: 0.85rem;
     }
 
-    /* عداد الزيارات أعلى يمين الصفحة */
-    .visitor-badge {
-      position: fixed;
-      top: 14px;
-      right: 14px;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 13px;
-      border: 1px solid var(--red);
-      border-radius: 12px;
-      color: #fff;
-      background: #171717;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-      font-size: 0.9rem;
-    }
+    @media (max-width: 650px) {
+      .page {
+        width: min(100% - 22px, 1000px);
+        padding-top: 42px;
+      }
 
-    #visitor-number {
-      color: var(--red-light);
-      font-weight: bold;
-    }
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
 
-    #visitor-number div {
-      display: inline;
-      padding: 0;
-      margin: 0;
-      border: 0;
-      color: var(--red-light);
-      background: transparent;
-      font: inherit;
-    }
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
 
-    [hidden] {
-      display: none !important;
-    }
+      .result-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        text-align: right;
+      }
 
-    @media (max-width: 700px) {
-      .results-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .result-value {
+        margin-top: 0;
+      }
+
+      .macro-grid {
+        gap: 8px;
+      }
+
+      .macro-card {
+        padding: 12px 6px;
       }
 
       .social-grid {
@@ -356,50 +405,16 @@
       }
 
       .social-card {
-        width: 100%;
-        max-width: 360px;
-        margin: 0 auto;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        width: min(100% - 22px, 1020px);
-        padding-top: 24px;
+        display: grid;
+        grid-template-columns: 78px 1fr;
+        justify-items: start;
+        text-align: right;
       }
 
-      .header {
-        padding-top: 48px;
-      }
-
-      .logo-box {
-        width: min(280px, 82vw);
-        height: 135px;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .results-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 9px;
-      }
-
-      .result-card {
-        min-height: 105px;
-        padding: 13px;
-      }
-
-      .result-value {
-        font-size: 1.15rem;
-      }
-
-      .visitor-badge {
-        top: 8px;
-        right: 8px;
-        padding: 6px 9px;
-        font-size: 0.78rem;
+      .qr-code {
+        width: 72px;
+        height: 72px;
+        grid-row: span 2;
       }
     }
 
@@ -417,25 +432,23 @@
 </head>
 
 <body>
-  <div class="visitor-badge" dir="rtl">
-    <span>عدد الزيارات:</span>
-    <div id="visitor-number">جارٍ التحميل...</div>
+  <div class="visitor-counter" aria-live="polite">
+    الزيارات: <span id="visitor-count">—</span>
   </div>
 
-  <main class="container">
-    <header class="header">
-      <div class="logo-box">
+  <main class="page">
+    <header class="site-header">
+      <div class="logo-frame">
         <img src="logo.png" alt="شعار قناة الصح">
       </div>
-
-      <h1>حاسبة السعرات والماكروز</h1>
-      <p class="subtitle">احسب احتياجك اليومي بطريقة سهلة من قناة الصح</p>
+      <h1>حاسبة السعرات <span class="accent">والماكروز</span></h1>
+      <p class="subtitle">احسب احتياجك اليومي بطريقة مبسطة</p>
     </header>
 
-    <section class="panel" aria-labelledby="calculator-title">
-      <h2 id="calculator-title">بياناتك</h2>
+    <section class="calculator" aria-labelledby="calculator-title">
+      <h2 class="section-title" id="calculator-title">أدخل بياناتك</h2>
 
-      <form id="calculator">
+      <form id="calculator-form" novalidate>
         <div class="form-grid">
           <div class="field">
             <label for="gender">الجنس</label>
@@ -447,242 +460,299 @@
 
           <div class="field">
             <label for="age">العمر (سنة)</label>
-            <input id="age" type="number" min="18" max="100" placeholder="مثال: 25" required>
+            <input id="age" type="text" inputmode="decimal"
+                   placeholder="مثال: 25" autocomplete="off" required>
           </div>
 
           <div class="field">
-            <label for="weight">الوزن (كجم)</label>
-            <input id="weight" type="number" min="30" max="300" step="0.1" placeholder="مثال: 70" required>
+            <label for="weight">الوزن (كغم)</label>
+            <input id="weight" type="text" inputmode="decimal"
+                   placeholder="مثال: 70" autocomplete="off" required>
           </div>
 
           <div class="field">
             <label for="height">الطول (سم)</label>
-            <input id="height" type="number" min="120" max="230" step="0.1" placeholder="مثال: 175" required>
+            <input id="height" type="text" inputmode="decimal"
+                   placeholder="مثال: 175" autocomplete="off" required>
           </div>
 
           <div class="field">
             <label for="activity">مستوى النشاط</label>
             <select id="activity" required>
-              <option value="1.2">قليل الحركة — تمارين نادرة</option>
-              <option value="1.375">نشاط خفيف — 1 إلى 3 أيام بالأسبوع</option>
-              <option value="1.55">نشاط متوسط — 3 إلى 5 أيام بالأسبوع</option>
-              <option value="1.725">نشاط عالٍ — 6 إلى 7 أيام بالأسبوع</option>
-              <option value="1.9">نشاط عالٍ جداً — مجهود بدني شديد</option>
+              <option value="1.2">قليل الحركة — تمارين قليلة أو معدومة</option>
+              <option value="1.375">نشاط خفيف — 1 إلى 3 أيام أسبوعياً</option>
+              <option value="1.55" selected>نشاط متوسط — 3 إلى 5 أيام أسبوعياً</option>
+              <option value="1.725">نشاط عالٍ — 6 إلى 7 أيام أسبوعياً</option>
+              <option value="1.9">نشاط شديد جداً — تدريب شاق أو عمل بدني</option>
             </select>
           </div>
 
           <div class="field">
-            <label for="goal">هدفك</label>
+            <label for="goal">الهدف</label>
             <select id="goal" required>
               <option value="loss">خسارة الوزن</option>
-              <option value="maintain">المحافظة على الوزن</option>
+              <option value="maintain" selected>المحافظة على الوزن</option>
               <option value="gain">زيادة الوزن</option>
             </select>
           </div>
         </div>
 
-        <button class="submit-button" type="submit">احسب احتياجي</button>
+        <button class="calculate-button" type="submit">احسب احتياجي</button>
+        <p class="error-message" id="error-message" role="alert"></p>
       </form>
 
-      <section class="results" id="results" aria-live="polite" hidden>
-        <h2>النتائج اليومية</h2>
+      <section class="results" id="results" aria-live="polite">
+        <h2 class="section-title">نتائجك اليومية</h2>
 
-        <div class="results-grid">
+        <div class="result-grid">
           <div class="result-card">
             <span class="result-label">معدل الأيض الأساسي (BMR)</span>
-            <span class="result-value" id="bmr-result">—</span>
-            <span class="result-unit">سعرة</span>
+            <span>
+              <span class="result-value" id="bmr-result">—</span>
+              <span class="result-unit">سعرة</span>
+            </span>
           </div>
 
           <div class="result-card">
             <span class="result-label">سعرات المحافظة</span>
-            <span class="result-value" id="maintenance-result">—</span>
-            <span class="result-unit">سعرة</span>
+            <span>
+              <span class="result-value" id="maintenance-result">—</span>
+              <span class="result-unit">سعرة</span>
+            </span>
           </div>
 
           <div class="result-card highlight">
-            <span class="result-label">السعرات حسب هدفك</span>
-            <span class="result-value" id="target-result">—</span>
-            <span class="result-unit">سعرة</span>
-          </div>
-
-          <div class="result-card macro-card">
-            <span class="result-label">البروتين</span>
-            <span class="result-value" id="protein-result">—</span>
-            <span class="result-unit">جرام</span>
-            <span class="ratio" id="protein-ratio"></span>
-          </div>
-
-          <div class="result-card macro-card">
-            <span class="result-label">الكربوهيدرات</span>
-            <span class="result-value" id="carbs-result">—</span>
-            <span class="result-unit">جرام</span>
-            <span class="ratio" id="carbs-ratio"></span>
-          </div>
-
-          <div class="result-card macro-card">
-            <span class="result-label">الدهون</span>
-            <span class="result-value" id="fat-result">—</span>
-            <span class="result-unit">جرام</span>
-            <span class="ratio" id="fat-ratio"></span>
+            <span class="result-label">السعرات المستهدفة</span>
+            <span>
+              <span class="result-value" id="target-result">—</span>
+              <span class="result-unit">سعرة</span>
+            </span>
           </div>
         </div>
 
-        <p class="note">
-          النتائج تقديرية وتعتمد على معادلة Mifflin–St Jeor. احتياجك الفعلي قد يختلف.
+        <h3 class="macro-title">توزيع المغذيات الكبرى</h3>
+        <div class="macro-grid">
+          <div class="macro-card">
+            <span class="macro-name">البروتين</span>
+            <span class="macro-grams" id="protein-result">—</span>
+            <span class="macro-percent" id="protein-percent">غرام</span>
+          </div>
+
+          <div class="macro-card">
+            <span class="macro-name">الكربوهيدرات</span>
+            <span class="macro-grams" id="carbs-result">—</span>
+            <span class="macro-percent" id="carbs-percent">غرام</span>
+          </div>
+
+          <div class="macro-card">
+            <span class="macro-name">الدهون</span>
+            <span class="macro-grams" id="fat-result">—</span>
+            <span class="macro-percent" id="fat-percent">غرام</span>
+          </div>
+        </div>
+
+        <p class="calculation-note">
+          النتائج تقديرية وتعتمد على معادلة Mifflin–St Jeor ومستوى النشاط الذي اخترته.
         </p>
       </section>
     </section>
 
     <section class="social-section" aria-labelledby="social-title">
-      <h2 id="social-title">تابع قناة الصح</h2>
-      <p class="social-intro">امسح رمز QR أو اضغط على المنصة لزيارة حسابنا</p>
+      <h2 class="section-title" id="social-title">
+        تابع قناة <span class="accent">الصح</span>
+      </h2>
 
       <div class="social-grid">
         <a class="social-card"
            href="https://www.instagram.com/al9a7keif/"
-           target="_blank"
-           rel="noopener noreferrer">
-          <strong>إنستغرام</strong>
-          <img class="social-qr" alt="رمز QR لحساب إنستغرام">
-          <span class="social-hint">@al9a7keif</span>
+           target="_blank" rel="noopener noreferrer"
+           aria-label="زيارة حساب الصح على إنستغرام">
+          <img class="qr-code"
+               src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.instagram.com%2Fal9a7keif%2F"
+               alt="رمز QR لحساب إنستغرام">
+          <span class="social-name">Instagram</span>
+          <span class="social-handle">@al9a7keif</span>
         </a>
 
         <a class="social-card"
            href="https://www.tiktok.com/@al9a7keif"
-           target="_blank"
-           rel="noopener noreferrer">
-          <strong>تيك توك</strong>
-          <img class="social-qr" alt="رمز QR لحساب تيك توك">
-          <span class="social-hint">@al9a7keif</span>
+           target="_blank" rel="noopener noreferrer"
+           aria-label="زيارة حساب الصح على تيك توك">
+          <img class="qr-code"
+               src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.tiktok.com%2F%40al9a7keif"
+               alt="رمز QR لحساب تيك توك">
+          <span class="social-name">TikTok</span>
+          <span class="social-handle">@al9a7keif</span>
         </a>
 
         <a class="social-card"
            href="https://www.facebook.com/share/1J5wu7i9UY/"
-           target="_blank"
-           rel="noopener noreferrer">
-          <strong>فيسبوك</strong>
-          <img class="social-qr" alt="رمز QR لرابط فيسبوك">
-          <span class="social-hint">زوروا حسابنا</span>
+           target="_blank" rel="noopener noreferrer"
+           aria-label="زيارة صفحة الصح على فيسبوك">
+          <img class="qr-code"
+               src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1J5wu7i9UY%2F"
+               alt="رمز QR لصفحة فيسبوك">
+          <span class="social-name">Facebook</span>
+          <span class="social-handle">الصح</span>
         </a>
       </div>
     </section>
 
-    <footer class="footer">© قناة الصح</footer>
+    <footer class="page-footer">
+      قناة الصح — حاسبة السعرات والماكروز
+    </footer>
   </main>
 
   <script>
-    const numberFormat = new Intl.NumberFormat("ar-EG", {
-      maximumFractionDigits: 0
-    });
+    const form = document.getElementById("calculator-form");
+    const errorMessage = document.getElementById("error-message");
+    const results = document.getElementById("results");
 
-    const macroRatios = {
-      loss: { protein: 0.30, carbs: 0.45, fat: 0.25 },
-      maintain: { protein: 0.25, carbs: 0.50, fat: 0.25 },
-      gain: { protein: 0.25, carbs: 0.55, fat: 0.20 }
-    };
+    // تحويل الأرقام العربية والهندية إلى أرقام إنجليزية،
+    // مع التعامل مع الفواصل العشرية وفواصل الآلاف.
+    function parseLocalizedNumber(value) {
+      const arabicDigits = "٠١٢٣٤٥٦٧٨٩";
+      const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
 
-    document.getElementById("calculator").addEventListener("submit", function (event) {
+      let normalized = String(value).trim();
+
+      normalized = normalized.replace(/[٠-٩]/g, digit =>
+        String(arabicDigits.indexOf(digit))
+      );
+
+      normalized = normalized.replace(/[۰-۹]/g, digit =>
+        String(persianDigits.indexOf(digit))
+      );
+
+      normalized = normalized
+        .replace(/[٫،]/g, ".")
+        .replace(/[٬,]/g, "")
+        .replace(/\s/g, "");
+
+      return Number.parseFloat(normalized);
+    }
+
+    function formatNumber(number) {
+      return Math.round(number).toLocaleString("ar");
+    }
+
+    form.addEventListener("submit", function (event) {
       event.preventDefault();
+      errorMessage.textContent = "";
 
       const gender = document.getElementById("gender").value;
-      const age = Number(document.getElementById("age").value);
-      const weight = Number(document.getElementById("weight").value);
-      const height = Number(document.getElementById("height").value);
+      const age = parseLocalizedNumber(document.getElementById("age").value);
+      const weight = parseLocalizedNumber(document.getElementById("weight").value);
+      const height = parseLocalizedNumber(document.getElementById("height").value);
       const activity = Number(document.getElementById("activity").value);
       const goal = document.getElementById("goal").value;
 
-      if (!age || !weight || !height || !activity) return;
+      if (![age, weight, height].every(Number.isFinite)) {
+        errorMessage.textContent = "أدخل العمر والوزن والطول بأرقام صحيحة.";
+        results.classList.remove("visible");
+        return;
+      }
 
-      // معادلة Mifflin–St Jeor
-      const bmr =
-        (10 * weight) +
-        (6.25 * height) -
-        (5 * age) +
-        (gender === "male" ? 5 : -161);
+      if (age <= 0 || weight <= 0 || height <= 0) {
+        errorMessage.textContent = "يجب أن تكون قيم العمر والوزن والطول أكبر من صفر.";
+        results.classList.remove("visible");
+        return;
+      }
 
+      // معادلة Mifflin–St Jeor:
+      // للذكر: 10 × الوزن + 6.25 × الطول − 5 × العمر + 5
+      // للأنثى: 10 × الوزن + 6.25 × الطول − 5 × العمر − 161
+      const genderConstant = gender === "male" ? 5 : -161;
+      const bmr = (10 * weight) + (6.25 * height) - (5 * age) + genderConstant;
       const maintenance = bmr * activity;
 
-      // خسارة: ناقص 500، محافظة: بدون تعديل، زيادة: زائد 500 سعرة
-      const calorieAdjustment = {
-        loss: -500,
-        maintain: 0,
-        gain: 500
-      };
+      let calorieAdjustment = 0;
+      let macroRatios;
 
-      const target = Math.max(0, maintenance + calorieAdjustment[goal]);
-      const ratios = macroRatios[goal];
+      if (goal === "loss") {
+        calorieAdjustment = -500;
+        macroRatios = { protein: 0.30, carbs: 0.45, fat: 0.25 };
+      } else if (goal === "gain") {
+        calorieAdjustment = 500;
+        macroRatios = { protein: 0.25, carbs: 0.55, fat: 0.20 };
+      } else {
+        macroRatios = { protein: 0.25, carbs: 0.50, fat: 0.25 };
+      }
 
-      // البروتين والكربوهيدرات 4 سعرات/جرام، والدهون 9 سعرات/جرام
-      const proteinGrams = (target * ratios.protein) / 4;
-      const carbsGrams = (target * ratios.carbs) / 4;
-      const fatGrams = (target * ratios.fat) / 9;
+      const targetCalories = maintenance + calorieAdjustment;
 
-      document.getElementById("bmr-result").textContent =
-        numberFormat.format(Math.round(bmr));
+      // البروتين والكربوهيدرات: 4 سعرات لكل غرام.
+      // الدهون: 9 سعرات لكل غرام.
+      const proteinGrams = (targetCalories * macroRatios.protein) / 4;
+      const carbsGrams = (targetCalories * macroRatios.carbs) / 4;
+      const fatGrams = (targetCalories * macroRatios.fat) / 9;
 
-      document.getElementById("maintenance-result").textContent =
-        numberFormat.format(Math.round(maintenance));
-
-      document.getElementById("target-result").textContent =
-        numberFormat.format(Math.round(target));
+      document.getElementById("bmr-result").textContent = formatNumber(bmr);
+      document.getElementById("maintenance-result").textContent = formatNumber(maintenance);
+      document.getElementById("target-result").textContent = formatNumber(targetCalories);
 
       document.getElementById("protein-result").textContent =
-        numberFormat.format(Math.round(proteinGrams));
-
+        `${formatNumber(proteinGrams)} غ`;
       document.getElementById("carbs-result").textContent =
-        numberFormat.format(Math.round(carbsGrams));
-
+        `${formatNumber(carbsGrams)} غ`;
       document.getElementById("fat-result").textContent =
-        numberFormat.format(Math.round(fatGrams));
+        `${formatNumber(fatGrams)} غ`;
 
-      document.getElementById("protein-ratio").textContent =
-        numberFormat.format(ratios.protein * 100) + "% من السعرات";
+      document.getElementById("protein-percent").textContent =
+        `${Math.round(macroRatios.protein * 100)}٪ من السعرات`;
+      document.getElementById("carbs-percent").textContent =
+        `${Math.round(macroRatios.carbs * 100)}٪ من السعرات`;
+      document.getElementById("fat-percent").textContent =
+        `${Math.round(macroRatios.fat * 100)}٪ من السعرات`;
 
-      document.getElementById("carbs-ratio").textContent =
-        numberFormat.format(ratios.carbs * 100) + "% من السعرات";
-
-      document.getElementById("fat-ratio").textContent =
-        numberFormat.format(ratios.fat * 100) + "% من السعرات";
-
-      document.getElementById("results").hidden = false;
-      document.getElementById("results").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    });
-
-    // إنشاء رموز QR لحسابات السوشيال ميديا
-    document.querySelectorAll(".social-card").forEach(function (card) {
-      const qrImage = card.querySelector(".social-qr");
-
-      qrImage.src =
-        "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
-        encodeURIComponent(card.href);
+      results.classList.add("visible");
     });
   </script>
 
-  <!-- يعرض مجموع زيارات الموقع داخل شارة العداد -->
-  <script>
-    const counterWait = setInterval(function () {
-      if (window.goatcounter && window.goatcounter.visit_count) {
-        clearInterval(counterWait);
-
-        window.goatcounter.visit_count({
-          append: "#visitor-number",
-          path: "TOTAL",
-          type: "html",
-          no_branding: true
-        });
-      }
-    }, 100);
-  </script>
-
-  <!-- يسجل الزيارات في GoatCounter -->
+  <!-- GoatCounter: تتبع الزيارات وعرض عددها -->
   <script
     data-goatcounter="https://al9a7keif.goatcounter.com/count"
     async
     src="https://gc.zgo.at/count.js">
+  </script>
+
+  <script>
+    // ننتظر تحميل GoatCounter حتى نستخدم المسار نفسه المسجل في الإحصاءات.
+    (function loadVisitorCount() {
+      const counterElement = document.getElementById("visitor-count");
+      let attempts = 0;
+
+      const timer = setInterval(async function () {
+        attempts++;
+
+        if (window.goatcounter && window.goatcounter.get_data) {
+          clearInterval(timer);
+
+          try {
+            const path = window.goatcounter.get_data().p || location.pathname;
+            const counterUrl =
+              "https://al9a7keif.goatcounter.com/counter/" +
+              encodeURIComponent(path) +
+              ".json";
+
+            const response = await fetch(counterUrl);
+
+            if (!response.ok) {
+              throw new Error("تعذر تحميل عدد الزيارات");
+            }
+
+            const data = await response.json();
+            counterElement.textContent = data.count || "0";
+          } catch (error) {
+            counterElement.textContent = "—";
+          }
+        }
+
+        if (attempts >= 50) {
+          clearInterval(timer);
+        }
+      }, 200);
+    })();
   </script>
 </body>
 </html>
