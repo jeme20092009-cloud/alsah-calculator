@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111111">
-  <meta name="description" content="حاسبة السعرات الحرارية والماكروز من قناة الصح">
-  <title>حاسبة السعرات والماكروز | الصح</title>
+  <meta name="theme-color" content="#101010">
+  <meta name="description" content="حاسبة السعرات والماكروز من قناة الصح">
+  <title>حاسبة السعرات | الصح</title>
+
+  <!-- خط Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
     :root {
@@ -31,8 +39,8 @@
         radial-gradient(ellipse at top, rgba(229, 37, 37, 0.12), transparent 42%),
         var(--background);
       color: var(--text);
-      font-family: Arial, Tahoma, sans-serif;
-      line-height: 1.7;
+      font-family: "Cairo", Tahoma, Arial, sans-serif;
+      line-height: 1.8;
     }
 
     .page {
@@ -41,14 +49,19 @@
       padding: 34px 0 48px;
     }
 
+    /* كلمة الزيارات بيضاء والرقم أحمر */
     .visitor-counter {
       position: absolute;
       top: 16px;
       right: 20px;
       z-index: 2;
-      color: var(--red);
+      color: #ffffff;
       font-size: 14px;
       font-weight: 700;
+    }
+
+    .visitor-counter span {
+      color: var(--red);
     }
 
     .site-header {
@@ -109,12 +122,13 @@
     h1 {
       margin: 0;
       color: var(--text);
-      font-size: clamp(26px, 5vw, 38px);
-      line-height: 1.3;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.5;
+      font-weight: 800;
     }
 
     .subtitle {
-      margin: 8px 0 0;
+      margin: 7px 0 0;
       color: var(--muted);
       font-size: 15px;
     }
@@ -138,6 +152,7 @@
     .section-title {
       margin: 0 0 20px;
       font-size: 21px;
+      font-weight: 700;
     }
 
     .form-grid {
@@ -191,7 +206,7 @@
       border-radius: 11px;
       background: var(--red);
       color: white;
-      font: inherit;
+      font-family: inherit;
       font-size: 17px;
       font-weight: 700;
       cursor: pointer;
@@ -252,7 +267,7 @@
       color: var(--text);
       font-size: clamp(20px, 4vw, 26px);
       font-weight: 800;
-      line-height: 1.3;
+      line-height: 1.5;
     }
 
     .result-unit {
@@ -263,6 +278,7 @@
     .macro-title {
       margin: 24px 0 12px;
       font-size: 18px;
+      font-weight: 700;
     }
 
     .macro-grid {
@@ -441,7 +457,8 @@
       <div class="logo-frame">
         <img src="logo.png" alt="شعار قناة الصح">
       </div>
-      <h1>حاسبة السعرات <span class="accent">والماكروز</span></h1>
+
+      <h1>حاسبة <span class="accent">السعرات</span></h1>
       <p class="subtitle">احسب احتياجك اليومي بطريقة مبسطة</p>
     </header>
 
@@ -460,20 +477,38 @@
 
           <div class="field">
             <label for="age">العمر (سنة)</label>
-            <input id="age" type="text" inputmode="decimal"
-                   placeholder="مثال: 25" autocomplete="off" required>
+            <input
+              id="age"
+              type="text"
+              inputmode="decimal"
+              placeholder="مثال: 25"
+              autocomplete="off"
+              required
+            >
           </div>
 
           <div class="field">
             <label for="weight">الوزن (كغم)</label>
-            <input id="weight" type="text" inputmode="decimal"
-                   placeholder="مثال: 70" autocomplete="off" required>
+            <input
+              id="weight"
+              type="text"
+              inputmode="decimal"
+              placeholder="مثال: 70"
+              autocomplete="off"
+              required
+            >
           </div>
 
           <div class="field">
             <label for="height">الطول (سم)</label>
-            <input id="height" type="text" inputmode="decimal"
-                   placeholder="مثال: 175" autocomplete="off" required>
+            <input
+              id="height"
+              type="text"
+              inputmode="decimal"
+              placeholder="مثال: 175"
+              autocomplete="off"
+              required
+            >
           </div>
 
           <div class="field">
@@ -531,6 +566,7 @@
         </div>
 
         <h3 class="macro-title">توزيع المغذيات الكبرى</h3>
+
         <div class="macro-grid">
           <div class="macro-card">
             <span class="macro-name">البروتين</span>
@@ -559,39 +595,54 @@
 
     <section class="social-section" aria-labelledby="social-title">
       <h2 class="section-title" id="social-title">
-        تابع قناة <span class="accent">الصح</span>
+        تابعنا على مواقع التواصل
       </h2>
 
       <div class="social-grid">
-        <a class="social-card"
-           href="https://www.instagram.com/al9a7keif/"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="زيارة حساب الصح على إنستغرام">
-          <img class="qr-code"
-               src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.instagram.com%2Fal9a7keif%2F"
-               alt="رمز QR لحساب إنستغرام">
+        <a
+          class="social-card"
+          href="https://www.instagram.com/al9a7keif/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="زيارة حساب الصح على إنستغرام"
+        >
+          <img
+            class="qr-code"
+            src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.instagram.com%2Fal9a7keif%2F"
+            alt="رمز QR لحساب إنستغرام"
+          >
           <span class="social-name">Instagram</span>
           <span class="social-handle">@al9a7keif</span>
         </a>
 
-        <a class="social-card"
-           href="https://www.tiktok.com/@al9a7keif"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="زيارة حساب الصح على تيك توك">
-          <img class="qr-code"
-               src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.tiktok.com%2F%40al9a7keif"
-               alt="رمز QR لحساب تيك توك">
+        <a
+          class="social-card"
+          href="https://www.tiktok.com/@al9a7keif"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="زيارة حساب الصح على تيك توك"
+        >
+          <img
+            class="qr-code"
+            src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.tiktok.com%2F%40al9a7keif"
+            alt="رمز QR لحساب تيك توك"
+          >
           <span class="social-name">TikTok</span>
           <span class="social-handle">@al9a7keif</span>
         </a>
 
-        <a class="social-card"
-           href="https://www.facebook.com/share/1J5wu7i9UY/"
-           target="_blank" rel="noopener noreferrer"
-           aria-label="زيارة صفحة الصح على فيسبوك">
-          <img class="qr-code"
-               src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1J5wu7i9UY%2F"
-               alt="رمز QR لصفحة فيسبوك">
+        <a
+          class="social-card"
+          href="https://www.facebook.com/share/1J5wu7i9UY/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="زيارة صفحة الصح على فيسبوك"
+        >
+          <img
+            class="qr-code"
+            src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1J5wu7i9UY%2F"
+            alt="رمز QR لصفحة فيسبوك"
+          >
           <span class="social-name">Facebook</span>
           <span class="social-handle">الصح</span>
         </a>
@@ -599,7 +650,7 @@
     </section>
 
     <footer class="page-footer">
-      قناة الصح — حاسبة السعرات والماكروز
+      قناة الصح — حاسبة السعرات
     </footer>
   </main>
 
@@ -608,8 +659,7 @@
     const errorMessage = document.getElementById("error-message");
     const results = document.getElementById("results");
 
-    // تحويل الأرقام العربية والهندية إلى أرقام إنجليزية،
-    // مع التعامل مع الفواصل العشرية وفواصل الآلاف.
+    // تحويل الأرقام العربية والهندية إلى أرقام إنجليزية.
     function parseLocalizedNumber(value) {
       const arabicDigits = "٠١٢٣٤٥٦٧٨٩";
       const persianDigits = "۰۱۲۳۴۵۶۷۸۹";
@@ -654,16 +704,20 @@
       }
 
       if (age <= 0 || weight <= 0 || height <= 0) {
-        errorMessage.textContent = "يجب أن تكون قيم العمر والوزن والطول أكبر من صفر.";
+        errorMessage.textContent =
+          "يجب أن تكون قيم العمر والوزن والطول أكبر من صفر.";
         results.classList.remove("visible");
         return;
       }
 
-      // معادلة Mifflin–St Jeor:
-      // للذكر: 10 × الوزن + 6.25 × الطول − 5 × العمر + 5
-      // للأنثى: 10 × الوزن + 6.25 × الطول − 5 × العمر − 161
+      // معادلة Mifflin–St Jeor
       const genderConstant = gender === "male" ? 5 : -161;
-      const bmr = (10 * weight) + (6.25 * height) - (5 * age) + genderConstant;
+      const bmr =
+        (10 * weight) +
+        (6.25 * height) -
+        (5 * age) +
+        genderConstant;
+
       const maintenance = bmr * activity;
 
       let calorieAdjustment = 0;
@@ -671,12 +725,24 @@
 
       if (goal === "loss") {
         calorieAdjustment = -500;
-        macroRatios = { protein: 0.30, carbs: 0.45, fat: 0.25 };
+        macroRatios = {
+          protein: 0.30,
+          carbs: 0.45,
+          fat: 0.25
+        };
       } else if (goal === "gain") {
         calorieAdjustment = 500;
-        macroRatios = { protein: 0.25, carbs: 0.55, fat: 0.20 };
+        macroRatios = {
+          protein: 0.25,
+          carbs: 0.55,
+          fat: 0.20
+        };
       } else {
-        macroRatios = { protein: 0.25, carbs: 0.50, fat: 0.25 };
+        macroRatios = {
+          protein: 0.25,
+          carbs: 0.50,
+          fat: 0.25
+        };
       }
 
       const targetCalories = maintenance + calorieAdjustment;
@@ -687,21 +753,30 @@
       const carbsGrams = (targetCalories * macroRatios.carbs) / 4;
       const fatGrams = (targetCalories * macroRatios.fat) / 9;
 
-      document.getElementById("bmr-result").textContent = formatNumber(bmr);
-      document.getElementById("maintenance-result").textContent = formatNumber(maintenance);
-      document.getElementById("target-result").textContent = formatNumber(targetCalories);
+      document.getElementById("bmr-result").textContent =
+        formatNumber(bmr);
+
+      document.getElementById("maintenance-result").textContent =
+        formatNumber(maintenance);
+
+      document.getElementById("target-result").textContent =
+        formatNumber(targetCalories);
 
       document.getElementById("protein-result").textContent =
         `${formatNumber(proteinGrams)} غ`;
+
       document.getElementById("carbs-result").textContent =
         `${formatNumber(carbsGrams)} غ`;
+
       document.getElementById("fat-result").textContent =
         `${formatNumber(fatGrams)} غ`;
 
       document.getElementById("protein-percent").textContent =
         `${Math.round(macroRatios.protein * 100)}٪ من السعرات`;
+
       document.getElementById("carbs-percent").textContent =
         `${Math.round(macroRatios.carbs * 100)}٪ من السعرات`;
+
       document.getElementById("fat-percent").textContent =
         `${Math.round(macroRatios.fat * 100)}٪ من السعرات`;
 
@@ -709,7 +784,7 @@
     });
   </script>
 
-  <!-- GoatCounter: تتبع الزيارات وعرض عددها -->
+  <!-- GoatCounter -->
   <script
     data-goatcounter="https://al9a7keif.goatcounter.com/count"
     async
@@ -717,7 +792,6 @@
   </script>
 
   <script>
-    // ننتظر تحميل GoatCounter حتى نستخدم المسار نفسه المسجل في الإحصاءات.
     (function loadVisitorCount() {
       const counterElement = document.getElementById("visitor-count");
       let attempts = 0;
@@ -730,6 +804,7 @@
 
           try {
             const path = window.goatcounter.get_data().p || location.pathname;
+
             const counterUrl =
               "https://al9a7keif.goatcounter.com/counter/" +
               encodeURIComponent(path) +
